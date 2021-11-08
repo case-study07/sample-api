@@ -15,6 +15,7 @@ help:
 	@echo "  devadd package=  yarn add -D"
 	@echo "  add package=     yarn add"
 	@echo "  typeorm-init     typeorm init --database mysql"
+	@echo "  migration        typeorm migration:run"
 
 ## Docker Operation
 build:
@@ -58,4 +59,4 @@ typeorm-init:
 	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} install
 
 migration:
-	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} typeorm migration:run
+	@docker container run --net sample-api_default --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} typeorm migration:run

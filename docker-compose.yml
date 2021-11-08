@@ -7,6 +7,8 @@ services:
       - ${NODE_HOST_PORT}:${NODE_CONTAINER_PORT}
     volumes:
       - ${PWD}:/app
+    networks:
+      - backend
 
   mysql:
     container_name: ${DB_CONTAINER_NAME}
@@ -26,3 +28,7 @@ services:
       - .database.env
 volumes:
   database:
+
+networks:
+  backend:
+    driver: bridge
