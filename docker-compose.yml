@@ -9,7 +9,7 @@ services:
       - ${PWD}:/app
 
   mysql:
-    container_name: mysql
+    container_name: ${DB_CONTAINER_NAME}
     image: mariadb:10.5
     ports:
       - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}

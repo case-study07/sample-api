@@ -1,4 +1,4 @@
-include .docker.env
+include .env
 
 help:
 	@echo ""
@@ -19,10 +19,10 @@ help:
 ## Docker Operation
 build:
 	@docker image build --target dev -t ${IW_NODE_IMAGE}:${VERSION} ./ --no-cache
-	@docker compose --env-file .docker.env build --no-cache
+	@docker compose --env-file .database.env build --no-cache
 
 up:
-	@docker compose --env-file .docker.env up -d
+	@docker compose --env-file .database.env up -d
 
 exec:
 	@docker container exec -it ${IW_NODE_IMAGE} bash
@@ -34,13 +34,13 @@ flogs:
 	@docker container logs -f ${IW_NODE_IMAGE}
 
 down:
-	@docker compose --env-file .docker.env down
+	@docker compose --env-file .database.env down
 
 kill:
 	@docker container rm -f ${IW_NODE_IMAGE}
 
 restart:
-	@docker compose --env-file .docker.env restart
+	@docker compose --env-file .database.env restart
 
 ## Yarn Package Operation
 devadd:
@@ -56,3 +56,6 @@ install:
 typeorm-init:
 	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} typeorm init --database mysql
 	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} install
+
+migration:
+	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} typeorm migration:run
