@@ -14,7 +14,9 @@ help:
 	@echo "  restart          docker rm && run"
 	@echo "  devadd package=  yarn add -D"
 	@echo "  add package=     yarn add"
+	@echo "  typeorm-init     typeorm init --database mysql"
 
+## Docker Operation
 build:
 	@docker image build --target dev -t ${IW_NODE_IMAGE}:${VERSION} ./ --no-cache
 	@docker compose --env-file .docker.env build --no-cache
@@ -40,8 +42,17 @@ kill:
 restart:
 	@docker compose --env-file .docker.env restart
 
+## Yarn Package Operation
 devadd:
 	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} add -D ${package}
 
 add:
 	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} add ${package}
+
+install:
+	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} install
+
+## TypeORM Operation
+typeorm-init:
+	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} typeorm init --database mysql
+	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} install

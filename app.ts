@@ -1,4 +1,5 @@
 import express from 'express'
+import 'reflect-metadata'
 
 var app = express()
 app.use(express.json())

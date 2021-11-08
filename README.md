@@ -47,6 +47,7 @@ VERSION → Docker イメージのバージョン
 | tsc-init        | tsc --init                              |
 | devadd package= | yarn add -D                             |
 | add package     | yarn add                                |
+| typeorm-init    | typeorm --init                          |
 
 ### show help
 
