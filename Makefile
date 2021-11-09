@@ -15,7 +15,7 @@ help:
 	@echo "  add.dev package=  yarn add -D"
 	@echo "  add package=      yarn add"
 	@echo "  typeorm.init      typeorm init --database mysql"
-	@echo "  typeorm.migration typeorm migration:run"
+	@echo "  migration         typeorm migration:run"
 
 ## Docker Operation
 build:
@@ -51,5 +51,8 @@ typeorm.init:
 	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm init --database mysql"
 	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn install"
 
-typeorm.migration:
+migration:
 	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:run"
+
+migration.create:
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:create --name ${name}"
