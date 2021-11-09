@@ -2,13 +2,13 @@ version: '3.9'
 services:
   node:
     container_name: ${IW_NODE_IMAGE}
-    image: ${IW_NODE_IMAGE}:${VERSION}
+    build:
+      context: ./
+    command: 'yarn dev'
     ports:
       - ${NODE_HOST_PORT}:${NODE_CONTAINER_PORT}
     volumes:
       - ${PWD}:/app
-    networks:
-      - backend
 
   mysql:
     container_name: ${DB_CONTAINER_NAME}
@@ -28,7 +28,3 @@ services:
       - .database.env
 volumes:
   database:
-
-networks:
-  backend:
-    driver: bridge

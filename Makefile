@@ -5,21 +5,20 @@ help:
 	@echo "usage: make COMMAND"
 	@echo ""
 	@echo "Commands:"
-	@echo "  build            yarn install && docker build --no-cache"
-	@echo "  run              docker run"
-	@echo "  exec             docker exec"
-	@echo "  logs             docker logs"
-	@echo "  flogs            docker -f logs"
-	@echo "  kill             docker rm"
-	@echo "  restart          docker rm && run"
-	@echo "  devadd package=  yarn add -D"
-	@echo "  add package=     yarn add"
-	@echo "  typeorm-init     typeorm init --database mysql"
-	@echo "  migration        typeorm migration:run"
+	@echo "  build             yarn install && docker build --no-cache"
+	@echo "  run               docker run"
+	@echo "  exec              docker exec"
+	@echo "  logs              docker logs"
+	@echo "  flogs             docker -f logs"
+	@echo "  kill              docker rm"
+	@echo "  restart           docker rm && run"
+	@echo "  add.dev package=  yarn add -D"
+	@echo "  add package=      yarn add"
+	@echo "  typeorm.init      typeorm init --database mysql"
+	@echo "  typeorm.migration typeorm migration:run"
 
 ## Docker Operation
 build:
-	@docker image build --target dev -t ${IW_NODE_IMAGE}:${VERSION} ./ --no-cache
 	@docker compose --env-file .env build --no-cache
 
 up:
@@ -37,26 +36,20 @@ flogs:
 down:
 	@docker compose --env-file .env down
 
-kill:
-	@docker container rm -f ${IW_NODE_IMAGE}
-
 restart:
 	@docker compose --env-file .env restart
 
 ## Yarn Package Operation
-devadd:
-	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} add -D ${package}
+add.dev:
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn add -D ${package}"
 
 add:
-	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} add ${package}
-
-install:
-	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} install
+	@docker container exec -it ${IW_NODE_IMAGE} add ${package}
 
 ## TypeORM Operation
-typeorm-init:
-	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} typeorm init --database mysql
-	@docker container run --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} install
+typeorm.init:
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm init --database mysql"
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn install"
 
-migration:
-	@docker container run --net sample-api_default --rm -v ${PWD}:/app ${IW_NODE_IMAGE}:${VERSION} typeorm migration:run
+typeorm.migration:
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:run"
