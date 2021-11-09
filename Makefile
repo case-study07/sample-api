@@ -5,17 +5,20 @@ help:
 	@echo "usage: make COMMAND"
 	@echo ""
 	@echo "Commands:"
-	@echo "  build             yarn install && docker build --no-cache"
-	@echo "  run               docker run"
-	@echo "  exec              docker exec"
-	@echo "  logs              docker logs"
-	@echo "  flogs             docker -f logs"
-	@echo "  kill              docker rm"
-	@echo "  restart           docker rm && run"
-	@echo "  add.dev package=  yarn add -D"
-	@echo "  add package=      yarn add"
-	@echo "  typeorm.init      typeorm init --database mysql"
-	@echo "  migration         typeorm migration:run"
+	@echo "  build              yarn install && docker build --no-cache"
+	@echo "  run                docker run"
+	@echo "  exec               docker exec"
+	@echo "  logs               docker logs"
+	@echo "  flogs              docker -f logs"
+	@echo "  kill               docker rm"
+	@echo "  restart            docker rm && run"
+	@echo "  add.dev package=   yarn add -D xxx"
+	@echo "  add package=       yarn add xxx"
+	@echo "  typeorm.init       typeorm init --database mysql"
+	@echo "  migration          typeorm migration:run"
+	@echo "  migration.gen      typeorm migration:generate --name xxx"
+	@echo "  migration.create   typeorm migration:create --name xxx"
+	@echo "  migration.rollback typeorm migration:revert"
 
 ## Docker Operation
 build:
@@ -54,5 +57,11 @@ typeorm.init:
 migration:
 	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:run"
 
+migration.gen:
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:generate --name ${name}"
+
 migration.create:
 	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:create --name ${name}"
+
+migration.rollback:
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:revert"
