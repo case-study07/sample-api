@@ -1,13 +1,13 @@
 import express from 'express'
 import 'reflect-metadata'
-import { indexRouter } from './src/router'
+import { photoRouter } from './src/router'
 
 var app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Routing
-app.use('/', indexRouter)
+app.use('/photo', photoRouter)
 
 // Listen
 const PORT = 9000

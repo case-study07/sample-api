@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm'
 import { Photo } from '../entity/photo.entity'
 import { dbConnection } from '../../config/db.connection'
+import { UpdatePhotoType } from '../types/Photo.type'
 
 // post
 export const insertPhoto = async () => {
@@ -36,7 +37,7 @@ export const onePhoto = async (id: number) => {
 }
 
 // update
-export const updatePhoto = async (id: number, body: Photo) => {
+export const updatePhoto = async (id: number, body: UpdatePhotoType) => {
   try {
     const connection = await dbConnection()
     const photoRepository = connection.getRepository(Photo)

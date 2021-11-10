@@ -1,23 +1,11 @@
 import { Router, Request, Response, json } from 'express'
-import { allPhoto, insertPhoto, onePhoto } from '../lib/photo.db'
+import { Photo } from '../entity/photo.entity'
+import { allPhoto, insertPhoto, onePhoto, updatePhoto } from '../lib/Photo.db'
+import { UpdatePhotoType } from '../types/Photo.type'
 
-export const indexRouter = Router()
+export const photoRouter = Router()
 
-indexRouter.get('/insert', (req: Request, res: Response) => {
-  try {
-    insertPhoto()
-    res.json({
-      user: 'sato',
-    })
-  } catch (err) {
-    res.json({
-      response: 500,
-      message: err,
-    })
-  }
-})
-
-indexRouter.get('/all', async (req: Request, res: Response) => {
+photoRouter.get('/all', async (req: Request, res: Response) => {
   try {
     const photos = await allPhoto()
     res.json({
@@ -32,7 +20,7 @@ indexRouter.get('/all', async (req: Request, res: Response) => {
   }
 })
 
-indexRouter.get('/:id', async (req: Request, res: Response) => {
+photoRouter.get('/:id', async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id)
     const photo = await onePhoto(id)
@@ -48,10 +36,39 @@ indexRouter.get('/:id', async (req: Request, res: Response) => {
   }
 })
 
-indexRouter.get('/all', async (req: Request, res: Response) => {
-  const photos = await allPhoto()
-  res.json({
-    response: 200,
-    photos,
-  })
+photoRouter.get('/insert', (req: Request, res: Response) => {
+  try {
+    insertPhoto()
+    res.json({
+      user: 'sato',
+    })
+  } catch (err) {
+    res.json({
+      response: 500,
+      message: err,
+    })
+  }
+})
+
+photoRouter.get('/update/:id', async (req: Request, res: Response) => {
+  console.log('update')
+  try {
+    const id = parseInt(req.params.id)
+    if (id === undefined) throw 'undefined is id'
+    const body: UpdatePhotoType = {
+      name: 'test',
+      description: 'description',
+      filename: 'test.png',
+    }
+    const result = await updatePhoto(id, body)
+    console.log(result)
+    res.json({
+      response: 200,
+    })
+  } catch (err) {
+    res.json({
+      response: 500,
+      message: err,
+    })
+  }
 })
