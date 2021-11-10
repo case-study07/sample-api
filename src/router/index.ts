@@ -47,3 +47,11 @@ indexRouter.get('/:id', async (req: Request, res: Response) => {
     })
   }
 })
+
+indexRouter.get('/all', async (req: Request, res: Response) => {
+  const photos = await allPhoto()
+  res.json({
+    response: 200,
+    photos,
+  })
+})
