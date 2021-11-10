@@ -10,4 +10,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/', indexRouter)
 
 // Listen
-app.listen(9000)
+const PORT = 9000
+app.listen(PORT, () => {
+  console.log(`Started Server on port ${PORT}`)
+})
