@@ -5,8 +5,8 @@ module.exports = {
   username: 'root',
   password: 'root',
   database: 'case-study',
-  synchronize: true,
-  logging: true, // SQLをログに流すオプション
+  synchronize: false,
+  logging: false, // SQLをログに流すオプション
   entities: ['src/entity/**/*.ts'],
   migrations: ['src/migration/**/*.ts'],
   subscribers: ['src/subscriber/**/*.ts'],

@@ -58,10 +58,10 @@ migration:
 	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:run"
 
 migration.gen:
-	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:generate --name ${name}"
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:generate -n ${name}"
 
 migration.create:
-	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:create --name ${name}"
+	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:create -n ${name}"
 
 migration.rollback:
 	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:revert"
