@@ -1,5 +1,4 @@
 import { Router, Request, Response, json } from 'express'
-import { Photo } from '../entity/photo.entity'
 import {
   allPhoto,
   deletePhoto,
@@ -42,11 +41,19 @@ photoRouter.get('/:id', async (req: Request, res: Response) => {
   }
 })
 
-photoRouter.get('/insert', (req: Request, res: Response) => {
+photoRouter.post('/insert', async (req: Request, res: Response) => {
   try {
-    insertPhoto()
+    const { name, description, filename, views, isPublished } = req.body
+    const result = await insertPhoto({
+      name,
+      description,
+      filename,
+      views,
+      isPublished,
+    })
+    console.log(result)
     res.json({
-      user: 'sato',
+      response: 200,
     })
   } catch (err) {
     res.json({
@@ -56,9 +63,10 @@ photoRouter.get('/insert', (req: Request, res: Response) => {
   }
 })
 
-photoRouter.get('/update/:id', async (req: Request, res: Response) => {
+photoRouter.put('/update/:id', async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id)
+    const { name, description, filename, views, isPublished } = req.body
     if (id === undefined) throw 'undefined is id'
     const body: UpdatePhotoType = {
       name: 'test',
@@ -78,7 +86,7 @@ photoRouter.get('/update/:id', async (req: Request, res: Response) => {
   }
 })
 
-photoRouter.get('/delete/:id', async (req: Request, res: Response) => {
+photoRouter.delete('/delete/:id', async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id)
     if (id === undefined) throw 'undefined is id'

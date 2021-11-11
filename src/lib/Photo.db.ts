@@ -1,19 +1,13 @@
 import { getRepository } from 'typeorm'
 import { Photo } from '../entity/photo.entity'
 import { dbConnection } from '../../config/db.connection'
-import { UpdatePhotoType } from '../types/Photo.type'
+import { CreatePhotoType, UpdatePhotoType } from '../types/Photo.type'
 
 // post
-export const insertPhoto = async () => {
+export const insertPhoto = async (body: CreatePhotoType) => {
   const connection = await dbConnection()
-  let photo = new Photo()
-  photo.name = 'Me and Bears'
-  photo.description = 'I am near polar bears3'
-  photo.filename = 'photo-with-bears.jpg'
-  photo.views = 1
-  photo.isPublished = true
-
-  let photoRepository = connection.getRepository(Photo)
+  const photoRepository = connection.getRepository(Photo)
+  const photo = photoRepository.create(body)
 
   await connection.manager.save(photo)
   console.log('Photo has been saved.')
