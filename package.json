@@ -1,7 +1,7 @@
 {
   "name": "sample-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "必要なツール",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon -L",
@@ -28,5 +28,13 @@
     "@types/node": "^8.0.29",
     "ts-node": "3.3.0",
     "typescript": "3.3.3333"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/case-study07/sample-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/case-study07/sample-api/issues"
+  },
+  "homepage": "https://github.com/case-study07/sample-api#readme"
 }
