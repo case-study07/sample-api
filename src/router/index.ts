@@ -1,4 +1,4 @@
-import { Router, Request, Response, json } from 'express'
+import { Router, Request, Response, json, NextFunction } from 'express'
 import {
   allPhoto,
   deletePhoto,
@@ -8,97 +8,58 @@ import {
 } from '../lib/Photo.db'
 import { UpdatePhotoType } from '../types/Photo.type'
 
-export const photoRouter = Router()
+export const indexRouter = Router()
 
-photoRouter.get('/all', async (req: Request, res: Response) => {
-  try {
-    const photos = await allPhoto()
-    res.json({
-      response: 200,
-      photos,
-    })
-  } catch (err) {
-    res.json({
-      response: 500,
-      message: err,
-    })
-  }
-})
+// indexRouter.get('/all', async (req: Request, res: Response) => {
+//   try {
+//     const photos = await allPhoto()
+//     res.json({
+//       response: 200,
+//       photos,
+//     })
+//   } catch (err) {
+//     res.json({
+//       response: 500,
+//       message: err,
+//     })
+//   }
+// })
 
-photoRouter.get('/:id', async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id)
-    const photo = await onePhoto(id)
-    res.json({
-      response: 200,
-      photo,
-    })
-  } catch (err) {
-    res.json({
-      response: 500,
-      message: err,
-    })
-  }
-})
+// indexRouter.get('/:id', async (req: Request, res: Response) => {
+//   try {
+//     const id = parseInt(req.params.id)
+//     const photo = await onePhoto(id)
+//     res.json({
+//       response: 200,
+//       photo,
+//     })
+//   } catch (err) {
+//     res.json({
+//       response: 500,
+//       message: err,
+//     })
+//   }
+// })
 
-photoRouter.post('/insert', async (req: Request, res: Response) => {
-  try {
-    const { name, description, filename, views, isPublished } = req.body
-    const result = await insertPhoto({
-      name,
-      description,
-      filename,
-      views,
-      isPublished,
-    })
-    console.log(result)
-    res.json({
-      response: 200,
-    })
-  } catch (err) {
-    res.json({
-      response: 500,
-      message: err,
-    })
-  }
-})
 
-photoRouter.put('/update/:id', async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id)
-    const { name, description, filename, views, isPublished } = req.body
-    if (id === undefined) throw 'undefined is id'
-    const body: UpdatePhotoType = {
-      name: 'test',
-      description: 'description',
-      filename: 'test.png',
-    }
-    const result = await updatePhoto(id, body)
-    console.log(result)
-    res.json({
-      response: 200,
-    })
-  } catch (err) {
-    res.json({
-      response: 500,
-      message: err,
-    })
-  }
-})
+indexRouter.get('/', function(req, res){
+    res.end('hello, world');
+});
 
-photoRouter.delete('/delete/:id', async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id)
-    if (id === undefined) throw 'undefined is id'
-    const result = await deletePhoto(id)
-    console.log(result)
-    res.json({
-      response: 200,
-    })
-  } catch (err) {
-    res.json({
-      response: 500,
-      message: err,
-    })
-  }
-})
+indexRouter.get('/err', function(req, res){
+    throw new Error("hoge")// hogeなんて変数はないのでエラー。
+});
+
+// エラーを扱うためのハンドラ
+indexRouter.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    return res.status(404).send(err.message);
+  });
+
+indexRouter.get('*', async (req, res, next) => {
+    next(new Error("Route not found"));
+  });
+
+indexRouter.use(function(err, req, res, next){
+    res.status(500);
+    res.end('my 500 error! : ' + err);
+});

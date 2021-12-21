@@ -1,5 +1,6 @@
 {
-  "watch": ["./"],
-  "ext": "js, ts, ejs, css, json",
-  "exec": "yarn ts-node app.ts"
+    "watch": ["./"],
+    "ext": "js, ts, ejs, css, json",
+    "exec": "yarn ts-node app.ts",
+    "legacyWatch": true
 }
