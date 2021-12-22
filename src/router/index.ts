@@ -1,3 +1,4 @@
+import { NextFunction } from 'connect'
 import { Router, Request, Response, json } from 'express'
 import {
   allPhoto,
@@ -10,34 +11,30 @@ import { UpdatePhotoType } from '../types/Photo.type'
 
 export const photoRouter = Router()
 
-photoRouter.get('/all', async (req: Request, res: Response) => {
-  try {
+// /photo/all
+photoRouter.get('/all', async (req: Request, res: Response, next: NextFunction) => {
+  try{
     const photos = await allPhoto()
     res.json({
       response: 200,
       photos,
     })
-  } catch (err) {
-    res.json({
-      response: 500,
-      message: err,
-    })
+  }catch(err){
+    return next(err)
   }
 })
 
-photoRouter.get('/:id', async (req: Request, res: Response) => {
-  try {
+photoRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  try{
     const id = parseInt(req.params.id)
     const photo = await onePhoto(id)
+    if(photo === undefined) throw new Error("404 Not Found")
     res.json({
       response: 200,
       photo,
     })
-  } catch (err) {
-    res.json({
-      response: 500,
-      message: err,
-    })
+  }catch(err){
+    return next(err)
   }
 })
 
