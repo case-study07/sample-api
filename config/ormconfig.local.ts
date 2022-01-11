@@ -1,12 +1,8 @@
 import { ConnectionOptions } from 'typeorm'
 
 const ormconfig: ConnectionOptions = {
-  type: 'mysql',
-  host: 'mysql',
-  port: 3306,
-  username: 'root',
-  password: 'root',
-  database: 'case-study',
+  type: 'sqlite',
+  database: "database.sqlite",
   synchronize: false,
   logging: false, // SQLをログに流すオプション
   entities: ['src/entity/**/*.ts'],

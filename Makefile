@@ -55,13 +55,13 @@ typeorm.init:
 	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn install"
 
 migration:
-	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:run"
+	npm run typeorm schema:sync
 
-migration.gen:
-	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:generate -n ${name}"
+# migration.gen:
+# 	npm run typeorm migration:generate -n ${name}
 
-migration.create:
-	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:create -n ${name}"
+# migration.create:
+# 	npm run typeorm migration:create -n ${name}
 
-migration.rollback:
-	@docker container exec -it ${IW_NODE_IMAGE} bash -c "yarn typeorm migration:revert"
+# migration.rollback:
+# 	npm run typeorm migration:revert

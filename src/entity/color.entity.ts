@@ -1,8 +1,8 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
-import {Book} from "./user.entity";
+import {Auction} from "./auction.entity";
 
 @Entity()
-export class User {
+export class Color {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -10,7 +10,7 @@ export class User {
     @Column()
     name: string;
 
-    @OneToMany(() => Book, book => book.user)
-    books: Book[];
+    @OneToMany(() => Auction, auction => auction.colorId)
+    auction: Auction[];
 
 }

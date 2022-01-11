@@ -1,11 +1,11 @@
 import { Router, Request, Response, json, NextFunction } from 'express'
-import {
-  allPhoto,
-  deletePhoto,
-  insertPhoto,
-  onePhoto,
-  updatePhoto,
-} from '../lib/Photo.db'
+// import {
+//   allPhoto,
+//   deletePhoto,
+//   insertPhoto,
+//   onePhoto,
+//   updatePhoto,
+// } from '../lib/Photo.db'
 import { UpdatePhotoType } from '../types/Photo.type'
 
 export const indexRouter = Router()
