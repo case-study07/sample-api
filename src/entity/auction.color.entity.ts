@@ -1,22 +1,17 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn} from "typeorm";
-import {AfterSuccessfulBid} from "./after.successful.bid.entity";
+import {Auction} from "./auction.entity";
 
 @Entity()
-export class DeliveryMethod { //配達方法
+export class AuctionColor {
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    //運送方法
     @Column()
-    transport: string;
+    name: string;
 
-    //費用
-    @Column()
-    cost: number;
-
-    @OneToMany(() => AfterSuccessfulBid, afterSuccessfulBid => afterSuccessfulBid.deliveryId)
-    afterSuccessfulBid: AfterSuccessfulBid[];
+    @OneToMany(() => Auction, auction => auction.auctionColorId)
+    auction: Auction[];
 
     @CreateDateColumn()
     createdAt: Date;

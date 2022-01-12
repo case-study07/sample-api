@@ -1,22 +1,17 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn} from "typeorm";
-import {AfterSuccessfulBid} from "./after.successful.bid.entity";
+import { ListingCar } from "./listing.car.entity";
 
 @Entity()
-export class DeliveryMethod { //配達方法
+export class MeterExchangeHistory { //メーター交換歴
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    //運送方法
     @Column()
-    transport: string;
+    text: string; //交換車、改ざん車、不明車
 
-    //費用
-    @Column()
-    cost: number;
-
-    @OneToMany(() => AfterSuccessfulBid, afterSuccessfulBid => afterSuccessfulBid.deliveryId)
-    afterSuccessfulBid: AfterSuccessfulBid[];
+    @OneToMany(() => ListingCar, listingCar => listingCar.meterExchangeHistoryId)
+    listingCar: ListingCar[];
 
     @CreateDateColumn()
     createdAt: Date;
